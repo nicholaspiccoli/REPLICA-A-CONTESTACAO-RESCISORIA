@@ -3,301 +3,210 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f5efe3" />
-  <meta name="description" content="Réplica à Contestação — Ação Rescisória PICCOLI × SIMBAL. Navegação interativa por fundamentos, documentos e remissões processuais." />
-  <title>Réplica à Contestação — PICCOLI × SIMBAL</title>
+  <meta name="theme-color" content="#f2eadc" />
+  <meta name="description" content="Memorial interativo da Ação Rescisória PICCOLI × SIMBAL: trajetória da monitória, execução, rescisória, contestação, réplica e fundamentos do art. 966 do CPC." />
+  <title>Memorial Interativo — PICCOLI × SIMBAL</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;650;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
 </head>
 <body>
+  <div id="readingProgress" class="reading-progress" aria-hidden="true"></div>
   <div class="top-rule" aria-hidden="true"></div>
 
   <header class="letterhead">
     <div class="brand-lockup">
       <div class="aa-mark">A.A.</div>
-      <div class="brand-copy">
-        <strong>ALDRYN AMARAL</strong>
-        <span>ADVOCACIA · OAB/AM 9.129</span>
-      </div>
+      <div class="brand-copy"><strong>ALDRYN AMARAL</strong><span>ADVOCACIA · OAB/AM 9.129</span></div>
     </div>
-    <div class="court-lockup">
-      <span>TRIBUNAL DE JUSTIÇA DO ESTADO DO AMAZONAS</span>
-      <strong>CÂMARAS REUNIDAS</strong>
-    </div>
-    <div class="case-mark">
-      <span>AÇÃO RESCISÓRIA</span>
-      <strong>0017896-26.2026.8.04.9001</strong>
-    </div>
+    <div class="court-lockup"><span>TRIBUNAL DE JUSTIÇA DO ESTADO DO AMAZONAS</span><strong>CÂMARAS REUNIDAS</strong></div>
+    <div class="case-mark"><span>AÇÃO RESCISÓRIA</span><strong>0017896-26.2026.8.04.9001</strong></div>
   </header>
 
   <nav class="commandbar" aria-label="Navegação principal">
     <div class="tabs" role="tablist" aria-label="Modos de leitura">
-      <button class="tab is-active" data-view="overview">Síntese</button>
-      <button class="tab" data-view="graph">Grafo probatório</button>
-      <button class="tab" data-view="matrix">Matriz documental</button>
-      <button class="tab" data-view="grounds">Art. 966</button>
-      <button class="tab" data-view="piece">Peça integral</button>
-      <button class="tab" data-view="documents">Documentos</button>
+      <button class="tab is-active" data-view="journey">Percurso</button>
+      <button class="tab" data-view="evolution">Evolução das teses</button>
+      <button class="tab" data-view="tests">Teste do art. 966</button>
+      <button class="tab" data-view="microcase">NF-e 9.883</button>
+      <button class="tab" data-view="scope">Alcance da prova</button>
+      <button class="tab" data-view="graph">Mapa probatório</button>
+      <button class="tab" data-view="autos">Autos</button>
     </div>
     <div class="tools">
-      <label class="searchbox" aria-label="Pesquisar na base">
-        <span aria-hidden="true">⌕</span>
-        <input id="globalSearch" type="search" placeholder="NF-e, CT-e, mov., página, fundamento..." autocomplete="off" />
-      </label>
-      <span id="dbStatus" class="status status-local">base local</span>
+      <label class="searchbox" aria-label="Pesquisar no memorial"><span aria-hidden="true">⌕</span><input id="globalSearch" type="search" placeholder="Buscar título, NF-e, CT-e, data, mov., inciso..." autocomplete="off" /></label>
+      <button id="judgeMode" class="quiet-button" title="Ocultar painéis laterais e ampliar a leitura">Modo julgamento</button>
+      <span id="dbStatus" class="status status-local">carregando</span>
     </div>
   </nav>
+
+  <div id="searchResults" class="search-results" hidden></div>
 
   <main class="app-shell">
     <aside class="sidebar">
       <section class="case-spine">
         <div class="spine-kicker">MEMORIAL INTERATIVO</div>
         <h1>PICCOLI <span>×</span> SIMBAL</h1>
-        <p>Réplica à contestação estruturada para conferência judicial de fatos, documentos, premissas decisórias e fundamentos rescindentes.</p>
+        <p>Da ação monitória ao núcleo depurado da réplica: fatos, atos processuais, documentos e subsunção ao art. 966.</p>
         <div class="case-facts">
-          <div><span>Processo originário</span><b>0625249-83.2018.8.04.0001</b></div>
-          <div><span>Sentença rescindenda</span><b>06.05.2024</b></div>
-          <div><span>Trânsito em julgado</span><b>04.06.2024</b></div>
+          <div><span>Originário</span><b>0625249-83.2018.8.04.0001</b></div>
+          <div><span>Sentença</span><b>06.05.2024</b></div>
+          <div><span>Trânsito</span><b>04.06.2024</b></div>
+          <div><span>Rescisória</span><b>0017896-26.2026.8.04.9001</b></div>
         </div>
-        <div class="mini-grid">
-          <div><b>III · V · VII · VIII</b><span>art. 966 CPC</span></div>
-          <div><b>86</b><span>páginas da réplica</span></div>
+        <div class="spine-articles"><span>ART. 966</span><b>III</b><b>V</b><b>VII</b><b>VIII</b></div>
+      </section>
+
+      <section class="panel navigation-panel">
+        <div class="eyebrow">LEITURA RECOMENDADA</div>
+        <h2>5 passos para compreender</h2>
+        <div class="quick-nav">
+          <button data-go="journey"><span>01</span><div><b>Ver o caminho inteiro</b><small>2018 → réplica</small></div></button>
+          <button data-go="evolution"><span>02</span><div><b>Ver o que foi depurado</b><small>inicial → contestação → réplica</small></div></button>
+          <button data-go="tests"><span>03</span><div><b>Testar cada inciso</b><small>requisitos legais visuais</small></div></button>
+          <button data-go="microcase"><span>04</span><div><b>Abrir o microcaso 9.883</b><small>modelo do inciso VIII</small></div></button>
+          <button data-go="autos"><span>05</span><div><b>Conferir a fonte</b><small>PDFs dentro da interface</small></div></button>
         </div>
       </section>
 
-      <section class="panel filter-panel">
-        <div class="panel-title-row">
-          <div>
-            <div class="eyebrow">NAVEGAÇÃO PROBATÓRIA</div>
-            <h2>Filtrar o grafo</h2>
-          </div>
-          <span class="filter-icon" aria-hidden="true">⎇</span>
-        </div>
-        <label class="field-label" for="typeFilter">Tipo de nó</label>
-        <select id="typeFilter">
-          <option value="all">Todos os elementos</option>
-          <option value="document">Documento primário</option>
-          <option value="page">Página / remissão</option>
-          <option value="ground">Fundamento</option>
-          <option value="fact">Fato probatório</option>
-        </select>
-        <label class="field-label" for="groundFilter">Fundamento rescindente</label>
-        <select id="groundFilter">
-          <option value="all">Todos os incisos</option>
-          <option value="III">Art. 966, III</option>
-          <option value="V">Art. 966, V</option>
-          <option value="VII">Art. 966, VII</option>
-          <option value="VIII">Art. 966, VIII</option>
-        </select>
-        <div class="filter-actions">
-          <button id="fitGraph" class="secondary">Enquadrar</button>
-          <button id="resetFilters" class="secondary">Limpar</button>
-        </div>
+      <section class="panel phase-filter-panel">
+        <div class="eyebrow">FILTRAR O PERCURSO</div>
+        <div id="phaseFilters" class="phase-filters"></div>
       </section>
 
-      <section class="panel legend">
-        <div class="eyebrow">LEGENDA</div>
-        <div><i class="dot document"></i><span><b>Documento</b><small>fonte primária / arquivo</small></span></div>
-        <div><i class="dot fact"></i><span><b>Fato</b><small>dado objetivo extraído</small></span></div>
-        <div><i class="dot page"></i><span><b>Remissão</b><small>movimento / página / folha</small></span></div>
-        <div><i class="dot ground"></i><span><b>Fundamento</b><small>art. 966 do CPC</small></span></div>
-        <p class="legend-note">A conexão visual não amplia o conteúdo da prova. Arestas distinguem prova direta, corroboração e contexto.</p>
+      <section class="panel actor-legend">
+        <div class="eyebrow">ATORES</div>
+        <div><i class="actor-dot piccoli"></i><span>PICCOLI</span></div>
+        <div><i class="actor-dot simbal"></i><span>SIMBAL</span></div>
+        <div><i class="actor-dot juizo"></i><span>JUÍZO / RELATOR</span></div>
+        <div><i class="actor-dot terceiro"></i><span>SEFAZ / TERCEIROS</span></div>
       </section>
     </aside>
 
     <section class="workspace">
-      <section id="view-overview" class="view is-active">
+      <section id="view-journey" class="view is-active">
         <article class="hero-card">
           <div class="hero-grid">
-            <div class="hero-copy">
-              <div class="hero-kicker"><span></span> RÉPLICA À CONTESTAÇÃO · AÇÃO RESCISÓRIA</div>
-              <h2>O ponto não é reler 2.600 páginas.<br><em>É conferir as incompatibilidades decisivas.</em></h2>
-              <p>Esta interface organiza a réplica em rotas de conferência. Cada fundamento conduz o Relator do documento primário ao fato objetivo, da localização nos autos à premissa adotada na sentença e, por fim, ao inciso rescindente efetivamente invocado.</p>
-              <div class="hero-actions">
-                <button class="primary" data-view-target="grounds">Ler por fundamento</button>
-                <button class="secondary light" data-view-target="piece">Abrir a réplica integral</button>
-              </div>
+            <div>
+              <div class="hero-kicker"><span></span> PERCURSO PROCESSUAL · VISÃO DO COLEGIADO</div>
+              <h2>Antes de decidir a réplica, <em>é preciso enxergar como a sentença foi construída.</em></h2>
+              <p>A interface organiza os autos por causalidade processual — não por volume. Cada evento mostra quem agiu, qual documento existe, onde ele está e por que aquele passo importa para a causa rescindente.</p>
+              <div class="hero-actions"><button class="primary" data-go="evolution">Chegar à réplica →</button><button class="secondary" data-go="autos">Abrir os autos</button></div>
             </div>
-            <div class="hero-seal" aria-hidden="true">
-              <span>ART.</span><strong>966</strong><small>CPC</small>
-            </div>
+            <div class="hero-seal"><span>ART.</span><strong>966</strong><small>CPC</small></div>
           </div>
-          <div class="gold-rule"></div>
-          <div class="hero-metrics" id="heroMetrics"></div>
+          <div id="heroMetrics" class="hero-metrics"></div>
         </article>
 
-        <section class="judicial-route">
-          <div class="route-heading">
-            <div class="eyebrow">ROTA DE CONFERÊNCIA</div>
-            <h2>Como ler a prova sem perder o nexo jurídico</h2>
-          </div>
-          <div class="route-track">
-            <article><span>01</span><b>Documento primário</b><p>Começar pela fonte individualizada, sem recortes autônomos.</p></article>
-            <i aria-hidden="true">→</i>
-            <article><span>02</span><b>Fato objetivo</b><p>Extrair apenas o que o documento efetivamente certifica.</p></article>
-            <i aria-hidden="true">→</i>
-            <article><span>03</span><b>Premissa judicial</b><p>Cotejar o fato com a regra e a premissa usada no decisum.</p></article>
-            <i aria-hidden="true">→</i>
-            <article><span>04</span><b>Hipótese rescindente</b><p>Subsumir com precisão aos incisos III, V, VII ou VIII.</p></article>
+        <section class="decision-question">
+          <div class="question-index">Q</div>
+          <div><div class="eyebrow">PERGUNTA DECISÓRIA</div><h2>A réplica está tentando revalorar a prova ou isolando vícios que sobrevivem aos filtros excepcionais do art. 966?</h2><p>O restante do memorial foi desenhado para responder exatamente essa pergunta, inclusive incorporando o checkpoint negativo da tutela provisória e as objeções da contestação.</p></div>
+        </section>
+
+        <section class="panel story-panel">
+          <div class="section-heading"><div><div class="eyebrow">LINHA DO TEMPO EXPLICADA</div><h2>O trajeto que levou à réplica</h2><p>Selecione um evento. A ficha lateral mostra remissão, efeito jurídico e acesso à fonte.</p></div><div class="story-actions"><button id="prevEvent" class="secondary">← anterior</button><span id="storyCounter" class="quiet-badge">—</span><button id="nextEvent" class="secondary">próximo →</button></div></div>
+          <div id="timeline" class="timeline"></div>
+        </section>
+
+        <section class="panel swimlane-panel">
+          <div class="section-heading"><div><div class="eyebrow">QUEM FEZ O QUÊ</div><h2>Cronologia por ator processual</h2><p>O mesmo percurso, agora separado em faixas: SIMBAL, PICCOLI, Juízo/Relator e terceiros.</p></div><span class="quiet-badge">arraste horizontalmente</span></div>
+          <div class="swimlane-scroll"><div id="swimlane" class="swimlane"></div></div>
+        </section>
+
+        <section class="turning-point-grid">
+          <article class="turning-card"><div class="turning-no">01</div><div class="eyebrow">2019 · INSTRUÇÃO</div><h3>A própria SIMBAL pediu prova externa da entrega</h3><p>Depois dos embargos, a autora requereu que a transportadora dissesse se as mercadorias haviam sido efetivamente entregues e apresentasse os comprovantes.</p><button data-event="instrucao-simbal-carinhosa">ver evento →</button></article>
+          <article class="turning-card"><div class="turning-no">02</div><div class="eyebrow">2020 · SEFAZ</div><h3>O documento fiscal contém uma exceção nominal</h3><p>A Nota Técnica registra várias escriturações, mas ressalva expressamente a NF-e 9.883 como não encontrada em nenhuma EFD da PICCOLI.</p><button data-go="microcase">abrir microcaso →</button></article>
+          <article class="turning-card"><div class="turning-no">03</div><div class="eyebrow">2024 · SENTENÇA</div><h3>O critério de julgamento é textual</h3><p>A sentença passa da prova escrita mínima à procedência e atribui à embargante o encargo de infirmar a obrigação, usando a SEFAZ como corroboração geral.</p><button data-event="sentenca-rescindenda">ver sentença →</button></article>
+          <article class="turning-card accent"><div class="turning-no">04</div><div class="eyebrow">2026 · RÉPLICA</div><h3>A causa rescindente é reduzida ao que resiste ao filtro</h3><p>O desenho atual não tenta salvar todas as formulações da inicial. Ele separa revaloração de vício rescindente e deixa visível o núcleo sobrevivente.</p><button data-go="evolution">ver depuração →</button></article>
+        </section>
+      </section>
+
+      <section id="view-evolution" class="view">
+        <header class="view-intro dark-intro"><div class="eyebrow">DA INICIAL À RÉPLICA</div><h2>A réplica não repete a inicial. Ela <em>depura</em> a causa de pedir.</h2><p>Cada inciso é mostrado em quatro momentos: formulação inicial → objeção da contestação/Relator → correção assumida na réplica → núcleo que permanece juridicamente defensável.</p></header>
+        <div id="thesisEvolution" class="thesis-evolution"></div>
+
+        <section class="proof-bridge panel">
+          <div class="section-heading"><div><div class="eyebrow">INCISO V · DISTINÇÃO CENTRAL</div><h2>Monitória: instaurar não é o mesmo que julgar definitivamente</h2></div><button class="secondary" data-article="V">abrir teste V</button></div>
+          <div class="bridge-track">
+            <article><span>ETAPA A</span><h3>Instauração</h3><p>Prova escrita sem eficácia executiva pode bastar para abrir a via monitória.</p><b>✓ ponto concedido pela réplica</b></article>
+            <i>→</i>
+            <article><span>EMBARGOS</span><h3>Contraditório pleno</h3><p>A existência e exigibilidade da obrigação entram no mérito e o procedimento assume cognição exauriente.</p><b>fls. 232/237 + 322/331</b></article>
+            <i>→</i>
+            <article class="bridge-question"><span>ETAPA B</span><h3>Regra de julgamento</h3><p>É aqui que a réplica localiza o art. 966, V: prova mínima foi transformada em prova plena? Houve deslocamento ilegítimo do ônus?</p><b>questão rescindente sobrevivente</b></article>
           </div>
         </section>
 
-        <div class="ground-summary" id="groundSummary"></div>
-
-        <section class="panel highlight-panel">
-          <div class="section-heading">
-            <div>
-              <div class="eyebrow">CADEIAS DE MAIOR DENSIDADE</div>
-              <h2>Rotas probatórias prioritárias</h2>
-              <p class="section-deck">Selecione uma rota para acompanhar o vínculo entre prova, remissão e consequência jurídica.</p>
-            </div>
-            <button class="secondary" data-view-target="graph">Explorar no grafo</button>
-          </div>
-          <div id="priorityChains" class="priority-grid"></div>
+        <section class="checkpoint-card">
+          <div class="checkpoint-mark">12.1</div><div><div class="eyebrow">CHECKPOINT DO RELATOR · 30.07.2026</div><h2>A réplica foi desenhada para responder à objeção de “revaloração”.</h2><p>Em cognição sumária, a tutela não foi concedida e o Relator registrou preocupação com reexame probatório e complementação instrutória. A versão atual torna essa crítica um filtro estrutural: o que exige nova pesagem sai do VIII; análise tardia não vira VII automaticamente; III exige dolo causal individualizado; V é reconstruído como regra jurídica de julgamento.</p><button data-event="rescisoria-tutela-negada">ver evento no percurso</button></div>
         </section>
+      </section>
 
-        <section class="orientation-card">
-          <div class="orientation-number">I</div>
-          <div>
-            <div class="eyebrow">CHAVE DE LEITURA</div>
-            <h2>A réplica assume o que deve ser concedido e preserva apenas o que resiste ao filtro do art. 966.</h2>
-            <p>O desenho evita transformar ação rescisória em sucedâneo recursal: fatos já controvertidos não são artificialmente rebatizados como erro de fato; escrituração fiscal não é tratada como inexistente; PIN, CT-e e SUFRAMA não são esvaziados, mas lidos dentro do alcance que efetivamente possuem.</p>
-          </div>
-        </section>
+      <section id="view-tests" class="view">
+        <header class="view-intro"><div class="eyebrow">TESTE DE SUBSUNÇÃO</div><h2>Não basta apontar um problema. É preciso fazê-lo caber no inciso correto.</h2><p>Os checklists abaixo explicitam requisitos, candidatos, pontos já demonstrados e pontos que ainda dependem de auditoria documental.</p></header>
+        <div id="articleTabs" class="article-tabs"></div>
+        <div id="legalTests" class="legal-tests"></div>
+        <div class="status-legend"><span class="test-status confirmed">confirmado</span><span class="test-status audit">depende de auditoria</span><span class="test-status subsidiary">subsidiário</span><span class="test-status excluded">excluído do inciso</span></div>
+      </section>
+
+      <section id="view-microcase" class="view">
+        <header class="microcase-hero">
+          <div><div class="eyebrow">MICROCASO · ART. 966, VIII</div><h2>NF-e 9.883</h2><p>O exemplo foi deliberadamente reduzido a uma pergunta binária: <strong>a NF-e 9.883 foi ou não encontrada na EFD da PICCOLI?</strong></p></div><div class="microcase-badge">VIII</div>
+        </header>
+        <div class="microcase-chain">
+          <article><span>01</span><div class="eyebrow">COBRANÇA</div><h3>Duplicata 000009883A</h3><p>Consta da relação da inicial monitória: R$ 3.015,00 singelo; R$ 4.591,56 atualizado.</p><button data-source="monitoria-1-150">abrir fonte</button></article>
+          <i>→</i>
+          <article><span>02</span><div class="eyebrow">DOCUMENTO OFICIAL</div><h3>Nota Técnica 061/2020</h3><p>Registra que a NF-e 9.883 não foi encontrada em nenhuma EFD da PICCOLI.</p><button data-doc-url="https://drive.google.com/file/d/1wY9VDIu4URTYbHLtubV_K__lf0uo9Hzp/preview">ver SEFAZ</button></article>
+          <i>→</i>
+          <article><span>03</span><div class="eyebrow">SENTENÇA</div><h3>Premissa geral</h3><p>A resposta da SEFAZ é usada genericamente como corroboração da escrituração das notas litigiosas.</p><button data-event="sentenca-rescindenda">ver evento</button></article>
+          <i>→</i>
+          <article class="micro-result"><span>04</span><div class="eyebrow">TESTE DO VIII</div><h3>Percepção, não pesagem</h3><p>O ponto só subsiste se a exceção específica não tiver sido controvertida/pronunciada e se houver nexo com o dispositivo.</p><button data-article="VIII">abrir checklist</button></article>
+        </div>
+        <section class="binary-question"><div class="binary-left"><span>O que a prova DIZ</span><b>“não foi encontrada em nenhuma EFD”</b></div><div class="binary-divider">≠</div><div class="binary-right"><span>O que a réplica NÃO deve dizer</span><b>“a SEFAZ declarou inexistente toda a operação comercial”</b></div></section>
+        <section class="partial-rescission panel"><div class="eyebrow">RESCINDIBILIDADE PARCIAL</div><h2>O inciso VIII não precisa derrubar toda a condenação para ser juridicamente relevante.</h2><p>Se o microfato preencher cumulativamente o §1º do art. 966, a própria estratégia atual admite discutir a desconstituição do capítulo correspondente, sem converter uma exceção individual em ataque global a todas as operações.</p></section>
+        <section class="micro-source-layout"><div class="panel"><div class="section-heading"><div><div class="eyebrow">CHECKLIST 9.883</div><h2>Auditoria antes do protocolo</h2></div></div><div id="microTests"></div></div><div class="panel mini-reader"><div class="eyebrow">FONTE OFICIAL</div><h2>SEFAZ/AM</h2><iframe src="https://drive.google.com/file/d/1wY9VDIu4URTYbHLtubV_K__lf0uo9Hzp/preview" title="SEFAZ/AM — Nota Técnica" loading="lazy"></iframe></div></section>
+      </section>
+
+      <section id="view-scope" class="view">
+        <header class="view-intro"><div class="eyebrow">MATRIZ DE ALCANCE PROBATÓRIO</div><h2>O que cada documento demonstra — e o que ele não demonstra sozinho.</h2><p>Esta é a chave para impedir que escrituração fiscal, PIN, CT-e, protesto e recibo sejam tratados como se fossem semanticamente equivalentes.</p></header>
+        <div id="scopeMatrix" class="scope-matrix"></div>
       </section>
 
       <section id="view-graph" class="view">
-        <div class="graph-header panel">
-          <div>
-            <div class="eyebrow">MAPA DE NEXO DOCUMENTAL</div>
-            <h2>Documento → fato → remissão → fundamento</h2>
-            <p class="muted">O grafo é direcional e hierárquico. Clique em um nó para abrir sua ficha; filtre por inciso para reduzir o mapa ao itinerário relevante.</p>
-          </div>
-          <div class="graph-actions">
-            <button id="focusV" class="secondary">966 · V</button>
-            <button id="focusVIII" class="secondary">966 · VIII</button>
-            <button id="focusIII" class="secondary">966 · III</button>
-            <button id="focusVII" class="secondary">966 · VII</button>
-          </div>
+        <div class="graph-header panel"><div><div class="eyebrow">MAPA DE NEXO DOCUMENTAL</div><h2>Documento → fato → decisão → fundamento</h2><p>Use o grafo para investigar relações. Para compreender a sequência temporal, prefira o “Percurso”.</p></div><div id="graphFilters" class="graph-filters"><button class="graph-filter is-active" data-graph-filter="ALL">Todos</button><button class="graph-filter" data-graph-filter="V">V</button><button class="graph-filter" data-graph-filter="VIII">VIII</button><button class="graph-filter" data-graph-filter="III">III</button><button class="graph-filter" data-graph-filter="VII">VII</button></div></div>
+        <div class="graph-stage-labels"><span>DOCUMENTOS</span><span>FATOS</span><span>DECISÕES</span><span>FUNDAMENTOS</span></div>
+        <div class="graph-frame"><div id="cy" role="img" aria-label="Mapa probatório interativo"></div></div>
+      </section>
+
+      <section id="view-autos" class="view">
+        <header class="view-intro autos-intro"><div><div class="eyebrow">AUTOS DENTRO DO MEMORIAL</div><h2>Conferência sem abandonar a interface.</h2><p>Selecione um conjunto de autos e leia o PDF original no painel. Os arquivos permanecem no Google Drive e conservam as permissões da fonte.</p></div><span class="quiet-badge">documentos-fonte</span></header>
+        <div class="autos-layout">
+          <aside class="source-browser"><div id="sourceGroups" class="source-groups"></div><div id="sourceList" class="source-list"></div></aside>
+          <section class="reader-shell"><header class="reader-toolbar"><div><div id="readerGroup" class="eyebrow">—</div><h2 id="readerTitle">Selecione um documento</h2><p id="readerMeta">—</p></div><a id="readerOpen" class="secondary anchor-button" href="#" target="_blank" rel="noopener noreferrer">Abrir no Drive ↗</a></header><div class="reader-frame-wrap"><iframe id="readerFrame" class="reader-frame" title="Documento processual" loading="lazy"></iframe></div></section>
         </div>
-        <div class="graph-stage-labels" aria-hidden="true">
-          <span>DOCUMENTOS</span><span>FATOS</span><span>REMISSÕES</span><span>FUNDAMENTOS</span>
-        </div>
-        <div class="graph-frame">
-          <div id="cy" role="img" aria-label="Grafo interativo de documentos, fatos, páginas e fundamentos da ação rescisória"></div>
-        </div>
-      </section>
-
-      <section id="view-matrix" class="view">
-        <section class="panel data-panel">
-          <div class="section-heading">
-            <div>
-              <div class="eyebrow">MATRIZ DE REMISSÃO</div>
-              <h2>Documento, endereço nos autos e função probatória</h2>
-              <p class="section-deck">Uma visualização tabular para conferência rápida durante o julgamento.</p>
-            </div>
-            <span class="quiet-badge">pesquisa + filtros sincronizados</span>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Documento / fato</th><th>Remissão processual</th><th>Inciso</th><th>Força</th><th>Uso em favor da PICCOLI</th></tr></thead>
-              <tbody id="matrixBody"></tbody>
-            </table>
-          </div>
-        </section>
-      </section>
-
-      <section id="view-grounds" class="view">
-        <header class="view-intro">
-          <div class="eyebrow">CAUSA DE PEDIR RESCINDENTE</div>
-          <h2>Quatro fundamentos, quatro filtros jurídicos distintos.</h2>
-          <p>A leitura por inciso impede que premissas de um fundamento sejam indevidamente transpostas para outro. Cada bloco reúne apenas os documentos e fatos que efetivamente podem sustentar a hipótese legal correspondente.</p>
-        </header>
-        <div id="groundsGrid" class="grounds-grid"></div>
-      </section>
-
-      <section id="view-piece" class="view">
-        <section class="piece-shell">
-          <header class="piece-toolbar">
-            <div>
-              <div class="eyebrow">DOCUMENTO INTEGRAL</div>
-              <h2>Réplica à Contestação</h2>
-              <p>Documento de trabalho integral, incorporado à interface para leitura paralela ao mapa probatório.</p>
-            </div>
-            <div class="piece-actions">
-              <a class="secondary anchor-button" href="https://drive.google.com/file/d/1X0joM4Kzd9Nrw3mdKY_LxBEP7JNLLgmO/view?usp=drivesdk" target="_blank" rel="noopener noreferrer">Abrir no Drive ↗</a>
-            </div>
-          </header>
-          <div class="pdf-frame-wrap">
-            <iframe class="pdf-frame" src="https://drive.google.com/file/d/1X0joM4Kzd9Nrw3mdKY_LxBEP7JNLLgmO/preview" title="Réplica à Contestação — PDF integral" allow="autoplay"></iframe>
-          </div>
-        </section>
-      </section>
-
-      <section id="view-documents" class="view">
-        <section class="panel data-panel">
-          <div class="section-heading">
-            <div>
-              <div class="eyebrow">ACERVO CONECTADO</div>
-              <h2>Documentos-fonte do Google Drive</h2>
-              <p class="section-deck">A interface aponta para o documento integral; a força probatória decorre da fonte, não do recorte visual.</p>
-            </div>
-            <span class="quiet-badge">fontes originais</span>
-          </div>
-          <div id="documentsList" class="documents-list"></div>
-        </section>
       </section>
     </section>
 
     <aside class="inspector">
       <section class="panel sticky-inspector">
-        <div class="inspector-head">
-          <div>
-            <div class="eyebrow">FICHA DE CONFERÊNCIA</div>
-            <h2>Nó selecionado</h2>
-          </div>
-          <span class="inspector-glyph" aria-hidden="true">⌁</span>
-        </div>
-        <div id="inspectorEmpty" class="empty-state">
-          <span class="empty-orbit" aria-hidden="true"></span>
-          <b>Selecione um elemento</b>
-          <p>Clique em um nó do grafo, uma linha da matriz ou um documento para abrir sua remissão e função jurídica.</p>
-        </div>
-        <div id="inspectorContent" class="inspector-content" hidden></div>
+        <div class="inspector-head"><div><div class="eyebrow">FICHA DE CONFERÊNCIA</div><h2 id="inspectorTitle">Selecione um evento</h2></div><span class="inspector-glyph">⌁</span></div>
+        <div id="inspectorBody" class="inspector-body"><div class="empty-state">Clique em um evento, nó, requisito ou documento para ver remissão, efeito e fonte.</div></div>
       </section>
-
-      <section class="panel methodology">
-        <div class="eyebrow">CONTROLE DE QUALIDADE</div>
-        <h2>O que o grafo não faz</h2>
-        <ul>
-          <li>não transforma indício em prova plena;</li>
-          <li>não confunde EFD com recibo civil;</li>
-          <li>não confunde vistoria SUFRAMA com entrega;</li>
-          <li>não usa recorte sem documento-fonte;</li>
-          <li>não amplia o art. 966 além da causa de pedir.</li>
-        </ul>
-      </section>
-
-      <section class="panel quick-access">
-        <div class="eyebrow">ACESSO RÁPIDO</div>
-        <button data-view-target="piece"><span>01</span> Peça integral</button>
-        <button data-view-target="grounds"><span>02</span> Fundamentos</button>
-        <button data-view-target="matrix"><span>03</span> Matriz documental</button>
+      <section class="panel judicial-compass">
+        <div class="eyebrow">BÚSSOLA DO COLEGIADO</div>
+        <div class="compass-item"><span>1</span><p><b>O fato está nos autos?</b><br>Comece pela fonte.</p></div>
+        <div class="compass-item"><span>2</span><p><b>O que exatamente ela prova?</b><br>Não ampliar o conteúdo.</p></div>
+        <div class="compass-item"><span>3</span><p><b>Isso foi controvertido e decidido?</b><br>Especialmente no VIII.</p></div>
+        <div class="compass-item"><span>4</span><p><b>Qual inciso suporta a consequência?</b><br>Sem misturar fundamentos.</p></div>
       </section>
     </aside>
   </main>
 
-  <footer>
-    <div><strong>RÉPLICA À CONTESTAÇÃO</strong> · AÇÃO RESCISÓRIA Nº 0017896-26.2026.8.04.9001</div>
-    <div>Interface de apoio à conferência documental · fontes preservadas em seus repositórios originais</div>
-  </footer>
+  <footer><div>RÉPLICA À CONTESTAÇÃO · AÇÃO RESCISÓRIA Nº 0017896-26.2026.8.04.9001</div><div>Memorial interativo de apoio à conferência documental · dados estruturados no Supabase · fontes originais no Google Drive</div></footer>
 
   <script src="./config.js"></script>
-  <script src="./seed-data.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
