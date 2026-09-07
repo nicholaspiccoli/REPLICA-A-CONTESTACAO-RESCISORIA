@@ -3,92 +3,148 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f7f3e8" />
-  <title>Réplica à Contestação — Mapa Probatório PICCOLI × SIMBAL</title>
+  <meta name="theme-color" content="#f5efe3" />
+  <meta name="description" content="Réplica à Contestação — Ação Rescisória PICCOLI × SIMBAL. Navegação interativa por fundamentos, documentos e remissões processuais." />
+  <title>Réplica à Contestação — PICCOLI × SIMBAL</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;650;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
 </head>
 <body>
-  <div class="top-rule"></div>
+  <div class="top-rule" aria-hidden="true"></div>
+
   <header class="letterhead">
-    <div class="aa-mark">A.A.<small>OAB/AM 9.129</small></div>
-    <div class="site-mark">www.aldrynamaraladvocacia.com.br</div>
-    <div class="case-mark">AÇÃO RESCISÓRIA · 0017896-26.2026.8.04.9001</div>
+    <div class="brand-lockup">
+      <div class="aa-mark">A.A.</div>
+      <div class="brand-copy">
+        <strong>ALDRYN AMARAL</strong>
+        <span>ADVOCACIA · OAB/AM 9.129</span>
+      </div>
+    </div>
+    <div class="court-lockup">
+      <span>TRIBUNAL DE JUSTIÇA DO ESTADO DO AMAZONAS</span>
+      <strong>CÂMARAS REUNIDAS</strong>
+    </div>
+    <div class="case-mark">
+      <span>AÇÃO RESCISÓRIA</span>
+      <strong>0017896-26.2026.8.04.9001</strong>
+    </div>
   </header>
 
   <nav class="commandbar" aria-label="Navegação principal">
-    <div class="tabs">
-      <button class="tab is-active" data-view="overview">Visão geral</button>
+    <div class="tabs" role="tablist" aria-label="Modos de leitura">
+      <button class="tab is-active" data-view="overview">Síntese</button>
       <button class="tab" data-view="graph">Grafo probatório</button>
       <button class="tab" data-view="matrix">Matriz documental</button>
       <button class="tab" data-view="grounds">Art. 966</button>
+      <button class="tab" data-view="piece">Peça integral</button>
       <button class="tab" data-view="documents">Documentos</button>
     </div>
     <div class="tools">
-      <input id="globalSearch" type="search" placeholder="NF-e, CT-e, mov., página, fundamento..." aria-label="Pesquisar" />
-      <span id="dbStatus" class="status status-local">dados locais</span>
+      <label class="searchbox" aria-label="Pesquisar na base">
+        <span aria-hidden="true">⌕</span>
+        <input id="globalSearch" type="search" placeholder="NF-e, CT-e, mov., página, fundamento..." autocomplete="off" />
+      </label>
+      <span id="dbStatus" class="status status-local">base local</span>
     </div>
   </nav>
 
   <main class="app-shell">
     <aside class="sidebar">
-      <section class="panel identity-panel">
-        <div class="eyebrow">RÉPLICA À CONTESTAÇÃO</div>
-        <h1>PICCOLI × SIMBAL</h1>
-        <p class="muted">Mapa de evidências, remissões processuais e fundamentos rescindentes em favor da PICCOLI.</p>
+      <section class="case-spine">
+        <div class="spine-kicker">MEMORIAL INTERATIVO</div>
+        <h1>PICCOLI <span>×</span> SIMBAL</h1>
+        <p>Réplica à contestação estruturada para conferência judicial de fatos, documentos, premissas decisórias e fundamentos rescindentes.</p>
+        <div class="case-facts">
+          <div><span>Processo originário</span><b>0625249-83.2018.8.04.0001</b></div>
+          <div><span>Sentença rescindenda</span><b>06.05.2024</b></div>
+          <div><span>Trânsito em julgado</span><b>04.06.2024</b></div>
+        </div>
         <div class="mini-grid">
+          <div><b>III · V · VII · VIII</b><span>art. 966 CPC</span></div>
           <div><b>86</b><span>páginas da réplica</span></div>
-          <div><b>III · V · VII · VIII</b><span>incisos articulados</span></div>
         </div>
       </section>
 
-      <section class="panel">
-        <h2>Filtros do grafo</h2>
+      <section class="panel filter-panel">
+        <div class="panel-title-row">
+          <div>
+            <div class="eyebrow">NAVEGAÇÃO PROBATÓRIA</div>
+            <h2>Filtrar o grafo</h2>
+          </div>
+          <span class="filter-icon" aria-hidden="true">⎇</span>
+        </div>
         <label class="field-label" for="typeFilter">Tipo de nó</label>
         <select id="typeFilter">
-          <option value="all">Todos</option>
-          <option value="document">Documento</option>
+          <option value="all">Todos os elementos</option>
+          <option value="document">Documento primário</option>
           <option value="page">Página / remissão</option>
           <option value="ground">Fundamento</option>
           <option value="fact">Fato probatório</option>
         </select>
-        <label class="field-label" for="groundFilter">Inciso</label>
+        <label class="field-label" for="groundFilter">Fundamento rescindente</label>
         <select id="groundFilter">
-          <option value="all">Todos</option>
+          <option value="all">Todos os incisos</option>
           <option value="III">Art. 966, III</option>
           <option value="V">Art. 966, V</option>
           <option value="VII">Art. 966, VII</option>
           <option value="VIII">Art. 966, VIII</option>
         </select>
         <div class="filter-actions">
-          <button id="fitGraph" class="secondary">Ajustar grafo</button>
-          <button id="resetFilters" class="secondary">Limpar filtros</button>
+          <button id="fitGraph" class="secondary">Enquadrar</button>
+          <button id="resetFilters" class="secondary">Limpar</button>
         </div>
       </section>
 
       <section class="panel legend">
-        <h2>Legenda</h2>
-        <div><i class="dot document"></i> Documento primário / arquivo-fonte</div>
-        <div><i class="dot fact"></i> Fato extraído</div>
-        <div><i class="dot page"></i> Remissão na rescisória / monitória</div>
-        <div><i class="dot ground"></i> Fundamento rescindente</div>
-        <p class="legend-note">Linhas sólidas indicam ligação documental direta; tracejadas indicam apoio argumentativo/contextual.</p>
+        <div class="eyebrow">LEGENDA</div>
+        <div><i class="dot document"></i><span><b>Documento</b><small>fonte primária / arquivo</small></span></div>
+        <div><i class="dot fact"></i><span><b>Fato</b><small>dado objetivo extraído</small></span></div>
+        <div><i class="dot page"></i><span><b>Remissão</b><small>movimento / página / folha</small></span></div>
+        <div><i class="dot ground"></i><span><b>Fundamento</b><small>art. 966 do CPC</small></span></div>
+        <p class="legend-note">A conexão visual não amplia o conteúdo da prova. Arestas distinguem prova direta, corroboração e contexto.</p>
       </section>
     </aside>
 
     <section class="workspace">
       <section id="view-overview" class="view is-active">
-        <div class="hero-card">
-          <div class="hero-kicker">SÍNTESE PROBATÓRIA ESTRUTURADA</div>
-          <h2>A peça deve permitir conferir, não apenas reler.</h2>
-          <p>O painel conecta cada documento citado à sua localização nos autos e ao fundamento do art. 966 do CPC que ele efetivamente sustenta. O desenho parte do método adotado na própria réplica: documento primário → fato objetivo → remissão processual → consequência rescindente.</p>
+        <article class="hero-card">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <div class="hero-kicker"><span></span> RÉPLICA À CONTESTAÇÃO · AÇÃO RESCISÓRIA</div>
+              <h2>O ponto não é reler 2.600 páginas.<br><em>É conferir as incompatibilidades decisivas.</em></h2>
+              <p>Esta interface organiza a réplica em rotas de conferência. Cada fundamento conduz o Relator do documento primário ao fato objetivo, da localização nos autos à premissa adotada na sentença e, por fim, ao inciso rescindente efetivamente invocado.</p>
+              <div class="hero-actions">
+                <button class="primary" data-view-target="grounds">Ler por fundamento</button>
+                <button class="secondary light" data-view-target="piece">Abrir a réplica integral</button>
+              </div>
+            </div>
+            <div class="hero-seal" aria-hidden="true">
+              <span>ART.</span><strong>966</strong><small>CPC</small>
+            </div>
+          </div>
           <div class="gold-rule"></div>
           <div class="hero-metrics" id="heroMetrics"></div>
-        </div>
+        </article>
+
+        <section class="judicial-route">
+          <div class="route-heading">
+            <div class="eyebrow">ROTA DE CONFERÊNCIA</div>
+            <h2>Como ler a prova sem perder o nexo jurídico</h2>
+          </div>
+          <div class="route-track">
+            <article><span>01</span><b>Documento primário</b><p>Começar pela fonte individualizada, sem recortes autônomos.</p></article>
+            <i aria-hidden="true">→</i>
+            <article><span>02</span><b>Fato objetivo</b><p>Extrair apenas o que o documento efetivamente certifica.</p></article>
+            <i aria-hidden="true">→</i>
+            <article><span>03</span><b>Premissa judicial</b><p>Cotejar o fato com a regra e a premissa usada no decisum.</p></article>
+            <i aria-hidden="true">→</i>
+            <article><span>04</span><b>Hipótese rescindente</b><p>Subsumir com precisão aos incisos III, V, VII ou VIII.</p></article>
+          </div>
+        </section>
 
         <div class="ground-summary" id="groundSummary"></div>
 
@@ -97,44 +153,58 @@
             <div>
               <div class="eyebrow">CADEIAS DE MAIOR DENSIDADE</div>
               <h2>Rotas probatórias prioritárias</h2>
+              <p class="section-deck">Selecione uma rota para acompanhar o vínculo entre prova, remissão e consequência jurídica.</p>
             </div>
-            <button class="secondary" data-view-target="graph">Abrir no grafo</button>
+            <button class="secondary" data-view-target="graph">Explorar no grafo</button>
           </div>
           <div id="priorityChains" class="priority-grid"></div>
+        </section>
+
+        <section class="orientation-card">
+          <div class="orientation-number">I</div>
+          <div>
+            <div class="eyebrow">CHAVE DE LEITURA</div>
+            <h2>A réplica assume o que deve ser concedido e preserva apenas o que resiste ao filtro do art. 966.</h2>
+            <p>O desenho evita transformar ação rescisória em sucedâneo recursal: fatos já controvertidos não são artificialmente rebatizados como erro de fato; escrituração fiscal não é tratada como inexistente; PIN, CT-e e SUFRAMA não são esvaziados, mas lidos dentro do alcance que efetivamente possuem.</p>
+          </div>
         </section>
       </section>
 
       <section id="view-graph" class="view">
         <div class="graph-header panel">
           <div>
-            <div class="eyebrow">GRAFO DOCUMENTAL</div>
-            <h2>Documento → fato → página → fundamento</h2>
-            <p class="muted">Layout em camadas para tornar o nexo probatório auditável. Clique em qualquer nó para abrir a ficha lateral.</p>
+            <div class="eyebrow">MAPA DE NEXO DOCUMENTAL</div>
+            <h2>Documento → fato → remissão → fundamento</h2>
+            <p class="muted">O grafo é direcional e hierárquico. Clique em um nó para abrir sua ficha; filtre por inciso para reduzir o mapa ao itinerário relevante.</p>
           </div>
           <div class="graph-actions">
-            <button id="focusV" class="secondary">Focar V</button>
-            <button id="focusVIII" class="secondary">Focar VIII</button>
-            <button id="focusIII" class="secondary">Focar III</button>
-            <button id="focusVII" class="secondary">Focar VII</button>
+            <button id="focusV" class="secondary">966 · V</button>
+            <button id="focusVIII" class="secondary">966 · VIII</button>
+            <button id="focusIII" class="secondary">966 · III</button>
+            <button id="focusVII" class="secondary">966 · VII</button>
           </div>
         </div>
+        <div class="graph-stage-labels" aria-hidden="true">
+          <span>DOCUMENTOS</span><span>FATOS</span><span>REMISSÕES</span><span>FUNDAMENTOS</span>
+        </div>
         <div class="graph-frame">
-          <div id="cy" role="img" aria-label="Grafo interativo de documentos, fatos, páginas e fundamentos"></div>
+          <div id="cy" role="img" aria-label="Grafo interativo de documentos, fatos, páginas e fundamentos da ação rescisória"></div>
         </div>
       </section>
 
       <section id="view-matrix" class="view">
-        <section class="panel">
+        <section class="panel data-panel">
           <div class="section-heading">
             <div>
               <div class="eyebrow">MATRIZ DE REMISSÃO</div>
-              <h2>Documento, página e tese</h2>
+              <h2>Documento, endereço nos autos e função probatória</h2>
+              <p class="section-deck">Uma visualização tabular para conferência rápida durante o julgamento.</p>
             </div>
-            <span class="quiet-badge">ordenável pela pesquisa</span>
+            <span class="quiet-badge">pesquisa + filtros sincronizados</span>
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Documento / fato</th><th>Remissão</th><th>Inciso</th><th>Força</th><th>Uso em favor da PICCOLI</th></tr></thead>
+              <thead><tr><th>Documento / fato</th><th>Remissão processual</th><th>Inciso</th><th>Força</th><th>Uso em favor da PICCOLI</th></tr></thead>
               <tbody id="matrixBody"></tbody>
             </table>
           </div>
@@ -142,17 +212,41 @@
       </section>
 
       <section id="view-grounds" class="view">
+        <header class="view-intro">
+          <div class="eyebrow">CAUSA DE PEDIR RESCINDENTE</div>
+          <h2>Quatro fundamentos, quatro filtros jurídicos distintos.</h2>
+          <p>A leitura por inciso impede que premissas de um fundamento sejam indevidamente transpostas para outro. Cada bloco reúne apenas os documentos e fatos que efetivamente podem sustentar a hipótese legal correspondente.</p>
+        </header>
         <div id="groundsGrid" class="grounds-grid"></div>
       </section>
 
+      <section id="view-piece" class="view">
+        <section class="piece-shell">
+          <header class="piece-toolbar">
+            <div>
+              <div class="eyebrow">DOCUMENTO INTEGRAL</div>
+              <h2>Réplica à Contestação</h2>
+              <p>Documento de trabalho integral, incorporado à interface para leitura paralela ao mapa probatório.</p>
+            </div>
+            <div class="piece-actions">
+              <a class="secondary anchor-button" href="https://drive.google.com/file/d/1X0joM4Kzd9Nrw3mdKY_LxBEP7JNLLgmO/view?usp=drivesdk" target="_blank" rel="noopener noreferrer">Abrir no Drive ↗</a>
+            </div>
+          </header>
+          <div class="pdf-frame-wrap">
+            <iframe class="pdf-frame" src="https://drive.google.com/file/d/1X0joM4Kzd9Nrw3mdKY_LxBEP7JNLLgmO/preview" title="Réplica à Contestação — PDF integral" allow="autoplay"></iframe>
+          </div>
+        </section>
+      </section>
+
       <section id="view-documents" class="view">
-        <section class="panel">
+        <section class="panel data-panel">
           <div class="section-heading">
             <div>
               <div class="eyebrow">ACERVO CONECTADO</div>
               <h2>Documentos-fonte do Google Drive</h2>
+              <p class="section-deck">A interface aponta para o documento integral; a força probatória decorre da fonte, não do recorte visual.</p>
             </div>
-            <span class="quiet-badge">links preservam permissões do Drive</span>
+            <span class="quiet-badge">fontes originais</span>
           </div>
           <div id="documentsList" class="documents-list"></div>
         </section>
@@ -161,22 +255,45 @@
 
     <aside class="inspector">
       <section class="panel sticky-inspector">
-        <div class="eyebrow">FICHA DO NÓ</div>
-        <div id="inspectorEmpty" class="empty-state">Selecione um nó no grafo, uma linha da matriz ou um documento.</div>
+        <div class="inspector-head">
+          <div>
+            <div class="eyebrow">FICHA DE CONFERÊNCIA</div>
+            <h2>Nó selecionado</h2>
+          </div>
+          <span class="inspector-glyph" aria-hidden="true">⌁</span>
+        </div>
+        <div id="inspectorEmpty" class="empty-state">
+          <span class="empty-orbit" aria-hidden="true"></span>
+          <b>Selecione um elemento</b>
+          <p>Clique em um nó do grafo, uma linha da matriz ou um documento para abrir sua remissão e função jurídica.</p>
+        </div>
         <div id="inspectorContent" class="inspector-content" hidden></div>
       </section>
 
       <section class="panel methodology">
-        <div class="eyebrow">MÉTODO</div>
-        <h2>Limite probatório</h2>
-        <p>O grafo não converte inferência em prova. Cada aresta indica apenas o vínculo que o documento permite sustentar, com gradação entre prova direta, corroboração e contexto.</p>
+        <div class="eyebrow">CONTROLE DE QUALIDADE</div>
+        <h2>O que o grafo não faz</h2>
+        <ul>
+          <li>não transforma indício em prova plena;</li>
+          <li>não confunde EFD com recibo civil;</li>
+          <li>não confunde vistoria SUFRAMA com entrega;</li>
+          <li>não usa recorte sem documento-fonte;</li>
+          <li>não amplia o art. 966 além da causa de pedir.</li>
+        </ul>
+      </section>
+
+      <section class="panel quick-access">
+        <div class="eyebrow">ACESSO RÁPIDO</div>
+        <button data-view-target="piece"><span>01</span> Peça integral</button>
+        <button data-view-target="grounds"><span>02</span> Fundamentos</button>
+        <button data-view-target="matrix"><span>03</span> Matriz documental</button>
       </section>
     </aside>
   </main>
 
   <footer>
-    <div>RÉPLICA À CONTESTAÇÃO · AÇÃO RESCISÓRIA Nº 0017896-26.2026.8.04.9001</div>
-    <div>Interface de apoio à conferência documental · documentos permanecem em suas fontes originais</div>
+    <div><strong>RÉPLICA À CONTESTAÇÃO</strong> · AÇÃO RESCISÓRIA Nº 0017896-26.2026.8.04.9001</div>
+    <div>Interface de apoio à conferência documental · fontes preservadas em seus repositórios originais</div>
   </footer>
 
   <script src="./config.js"></script>
