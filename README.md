@@ -2,10 +2,8 @@
 
 Memorial judicial interativo da Ação Rescisória nº 0017896-26.2026.8.04.9001.
 
-Estrutura atual:
-- `index.html` — portal com abas, busca e modo apresentação;
-- `memorial.html` — percurso temporal/documental completo;
-- `atlas.html` — Atlas Visual e mapas probatórios;
-- `relator.html` — leitura executiva em 5 minutos.
+A versão oficial preserva o layout do primeiro memorial visual (sidebar lateral escura, linha do tempo, cartões e seções contínuas) e integra, na mesma página, o Atlas Visual da Rescisória com mapa-mãe, árvore decisória, chartflow da monitória bifásica, matriz epistêmica, família 11.572, swimlane e modo Relator.
 
-A arquitetura mantém o memorial principal e adiciona camadas de navegação visual sem substituir os autos ou a réplica.
+Arquivos auxiliares históricos (`memorial.html`, `atlas.html` e `relator.html`) permanecem no repositório para rastreabilidade, mas a produção usa `index.html` como memorial monolítico principal.
+
+Produção: https://replica-a-contestacao-rescisoria.vercel.app
