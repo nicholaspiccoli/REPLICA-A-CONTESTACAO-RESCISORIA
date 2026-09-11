@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f4efe7">
+<meta name="robots" content="noindex,nofollow,noarchive">
 <title>PICCOLI × SIMBAL — Memorial Visual da Réplica</title>
 <style>html,body{margin:0;min-height:100%;background:#f7f3ec;color:#272522;font-family:Georgia,serif}.boot{min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center}.boot b{display:block;font-size:20px;margin-bottom:8px}.boot span{color:#6c665e;font-size:13px}</style>
 </head>
@@ -12,12 +13,13 @@
 <script>
 (async()=>{
   const base='https://cdn.jsdelivr.net/gh/nicholaspiccoli/REPLICA-A-CONTESTACAO-RESCISORIA@f4b6a7ef8acf865f3a2149104a30beeb8608c4c9/index.html';
-  const addon='https://cdn.jsdelivr.net/gh/nicholaspiccoli/REPLICA-A-CONTESTACAO-RESCISORIA@990ea99c8097c70c53cda1cea76937244d57140e/complemento-replica-2026-09-11.js';
+  const baseline='https://cdn.jsdelivr.net/gh/nicholaspiccoli/REPLICA-A-CONTESTACAO-RESCISORIA@990ea99c8097c70c53cda1cea76937244d57140e/complemento-replica-2026-09-11.js';
+  const visual='https://cdn.jsdelivr.net/gh/nicholaspiccoli/REPLICA-A-CONTESTACAO-RESCISORIA@da2b29c24fa3bce52eff96d054434a3a28053ca5/complemento-replica-2026-09-11.js';
   try{
     const r=await fetch(base,{cache:'no-store'});
     if(!r.ok)throw new Error('HTTP '+r.status);
     let html=await r.text();
-    html=html.replace('</body>',`<script src="${addon}"><\/script></body>`);
+    html=html.replace('</body>',`<script src="${baseline}"><\/script><script src="${visual}"><\/script></body>`);
     document.open();document.write(html);document.close();
   }catch(e){
     document.body.innerHTML='<div class="boot"><div><b>Falha ao carregar o memorial.</b><span>Atualize a página ou consulte o repositório oficial.</span></div></div>';
