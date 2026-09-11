@@ -1,320 +1,106 @@
 (() => {
   'use strict';
-
-  if (window.__PICCOLI_RELATOR_FIRST_20260911__) return;
-  window.__PICCOLI_RELATOR_FIRST_20260911__ = true;
+  if (window.__PICCOLI_VISUAL_DECISORIO_V2__) return;
+  window.__PICCOLI_VISUAL_DECISORIO_V2__ = true;
 
   const q = (s, r = document) => r.querySelector(s);
   const qa = (s, r = document) => [...r.querySelectorAll(s)];
-  const main = q('main');
   const hero = q('#top');
-  if (!main || !hero) return;
+  const main = q('main');
+  if (!hero || !main) return;
 
-  // Remove vestígios de versões anteriores que criavam bloco autônomo de "complementos".
-  q('#complementos-replica')?.remove();
-  q('.side nav a[href="#complementos-replica"]')?.remove();
+  const meta = document.createElement('meta');
+  meta.name = 'robots';
+  meta.content = 'noindex,nofollow,noarchive';
+  document.head.appendChild(meta);
 
-  // Ajustes visuais mínimos: preservam a identidade gráfica original e apenas reforçam a leitura sequencial.
-  if (!q('#relator-first-style')) {
-    const style = document.createElement('style');
-    style.id = 'relator-first-style';
-    style.textContent = `
-      .hero{min-height:72vh}
-      .relator-path{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-      .relator-path .atlas-q{grid-template-columns:38px 1fr;text-decoration:none;color:inherit;transition:.2s;min-height:154px}
-      .relator-path .atlas-q:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 10px 28px rgba(51,43,34,.08)}
-      .relator-path .atlas-q i{width:32px;height:32px}
-      .proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-      .proof-card{background:rgba(255,253,249,.9);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 8px 22px rgba(61,49,38,.045)}
-      .proof-card h4{font:600 21px/1.22 Lora;margin:8px 0 12px}
-      .proof-card p{font-size:12.5px;color:#514b44;margin:8px 0}
-      .proof-chain{margin-top:14px;padding:13px 14px;border-left:3px solid var(--gold);background:#f4ede3;border-radius:0 12px 12px 0;font-size:11.5px;color:#514a42}
-      .proof-chain strong{font-family:Lora;font-size:12.5px;color:var(--ink)}
-      .relator-sequence{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}
-      .relator-sequence a{text-decoration:none;border:1px solid var(--line);background:var(--white);border-radius:999px;padding:8px 11px;font-size:10px;font-weight:800;color:#5f574e}
-      .section[data-relator-secondary="true"] .section-index::after{content:" · DETALHE";color:var(--gold)}
-      @media(max-width:1100px){.relator-path{grid-template-columns:repeat(2,minmax(0,1fr))}}
-      @media(max-width:820px){.relator-path,.proof-grid{grid-template-columns:1fr}.hero{min-height:auto}}
-    `;
-    document.head.appendChild(style);
+  const style = document.createElement('style');
+  style.id = 'visual-decisorio-v2-style';
+  style.textContent = `
+    :root{--v:#272927;--viii:#7a3434;--iii:#5c5145;--vii:#40566a}
+    .hero{min-height:58vh!important;padding-top:54px!important;padding-bottom:42px!important}
+    .hero h2{font-size:clamp(36px,5.2vw,70px)!important}.hero-inner{max-width:1120px!important}
+    .decision-compass{margin-top:24px;display:grid;grid-template-columns:1fr 150px 1fr;grid-template-rows:auto 112px auto;gap:10px 14px;max-width:960px;align-items:center;position:relative}
+    .decision-center{grid-column:2;grid-row:2;background:var(--charcoal);color:#fff;border-radius:22px;padding:17px 12px;text-align:center;box-shadow:var(--shadow);z-index:2}.decision-center b{display:block;font:600 15px/1.2 Lora}.decision-center small{font-size:8px;text-transform:uppercase;letter-spacing:.11em;color:#bfb5a8}
+    .decision-node{z-index:2;text-decoration:none;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,249,.94);padding:14px;display:flex;gap:10px;min-height:82px;transition:.2s;box-shadow:0 8px 20px rgba(61,49,38,.04)}.decision-node:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 14px 34px rgba(61,49,38,.09)}
+    .decision-node i{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;color:#fff;font:700 13px Lora;font-style:normal;flex:0 0 auto}.decision-node b{display:block;font:600 14px/1.22 Lora}.decision-node small{display:block;font-size:9.5px;color:var(--muted);margin-top:4px;line-height:1.35}
+    .dn-v{grid-column:1;grid-row:1}.dn-viii{grid-column:3;grid-row:1}.dn-iii{grid-column:1;grid-row:3}.dn-vii{grid-column:3;grid-row:3}.dn-v i{background:var(--v)}.dn-viii i{background:var(--viii)}.dn-iii i{background:var(--iii)}.dn-vii i{background:var(--vii)}
+    .decision-lines{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}.decision-lines line{stroke:#c6b49c;stroke-width:1.1;stroke-dasharray:4 5;vector-effect:non-scaling-stroke}
+
+    #judge-rail{position:fixed;left:var(--sidebar);right:0;top:4px;z-index:45;display:flex;justify-content:center;pointer-events:none}#judge-rail .inner{pointer-events:auto;margin-top:9px;display:flex;gap:3px;padding:5px;background:rgba(247,243,236,.9);border:1px solid rgba(156,123,67,.18);border-radius:999px;backdrop-filter:blur(14px);box-shadow:0 8px 24px rgba(51,43,34,.08)}#judge-rail a{text-decoration:none;font-size:9px;font-weight:800;color:#776e64;padding:7px 9px;border-radius:999px;white-space:nowrap}#judge-rail a.active{background:var(--charcoal);color:#fff}
+
+    .exec-stage{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr);gap:28px;align-items:start}.exec-map{position:sticky;top:72px;background:var(--charcoal);color:#fff;border-radius:28px;padding:25px;min-height:430px;overflow:hidden}.exec-map:after{content:'966';position:absolute;right:-18px;bottom:-36px;font:700 145px/.8 Lora;color:rgba(255,255,255,.035)}.exec-map h4{font:600 27px/1.13 Lora;margin:8px 0 12px}.exec-map p{font-size:12px;color:#cec5b9}.orbit{height:220px;position:relative;margin-top:18px}.orbit .c{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:108px;height:108px;border-radius:50%;background:#202120;border:1px solid rgba(255,255,255,.18);display:grid;place-items:center;text-align:center;z-index:2}.orbit .c b{font:600 14px Lora}.orbit a{position:absolute;width:70px;height:70px;border-radius:50%;display:grid;place-items:center;text-decoration:none;color:#fff;font:700 11px Lora;z-index:2;border:1px solid rgba(255,255,255,.16);transition:.2s}.orbit a:hover{transform:scale(1.06)}.orbit .a{left:2%;top:8%;background:var(--v)}.orbit .b{right:2%;top:8%;background:var(--viii)}.orbit .d{left:2%;bottom:5%;background:var(--iii)}.orbit .e{right:2%;bottom:5%;background:var(--vii)}.orbit svg{position:absolute;inset:0;width:100%;height:100%;z-index:1}.orbit line{stroke:rgba(193,163,108,.48);stroke-width:1.2;stroke-dasharray:4 5}
+    .exec-steps{display:grid;gap:12px}.exec-step{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:20px;border:1px solid var(--line);border-radius:20px;background:rgba(255,253,249,.88);text-decoration:none;transition:.2s}.exec-step:hover{transform:translateX(4px);border-color:var(--gold);box-shadow:0 12px 28px rgba(51,43,34,.07)}.exec-step .n{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;color:#fff;font:700 15px Lora}.exec-step h4{font:600 18px/1.2 Lora;margin:0 0 6px}.exec-step p{font-size:12px;color:#585148;margin:0}.exec-step small{display:block;margin-top:8px;font-size:8.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8a7965}.nv{background:var(--v)}.nviii{background:var(--viii)}.niii{background:var(--iii)}.nvii{background:var(--vii)}.nend{background:var(--red)}
+
+    .submap{margin:20px 0 18px;border:1px solid var(--line);border-radius:24px;padding:18px;background:linear-gradient(180deg,rgba(255,253,249,.96),rgba(247,242,234,.84));box-shadow:0 10px 28px rgba(51,43,34,.045)}.subtop{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:13px}.subtop .ey{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--red)}.subtools{display:flex;gap:6px;flex-wrap:wrap}.echip{display:inline-flex;text-decoration:none;border:1px solid var(--line);background:var(--white);border-radius:999px;padding:6px 9px;font-size:8.5px;font-weight:800;color:#685f55}.echip:hover{border-color:var(--gold)}
+    .subchain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.substep{position:relative;padding:13px;border-radius:16px;border:1px solid #ddd1c1;background:#fffdf9;min-height:128px}.substep:not(:last-child):after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;color:var(--gold);font-weight:900;z-index:3}.substep span{display:block;font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8a7d6f}.substep b{display:block;font:600 13.5px/1.23 Lora;margin-top:6px}.substep p{font-size:10.2px;line-height:1.45;color:#5b544c;margin:7px 0 0}.substep.norm{color:#fff}.substep.norm span,.substep.norm p{color:rgba(255,255,255,.72)}.mv .norm{background:var(--v);border-color:var(--v)}.mviii .norm{background:var(--viii);border-color:var(--viii)}.miii .norm{background:var(--iii);border-color:var(--iii)}.mvii .norm{background:var(--vii);border-color:var(--vii)}
+    .rigor{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}.rigor summary{cursor:pointer;list-style:none;font-size:8.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#81766a}.rigor summary:before{content:'+';display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;border:1px solid var(--line);margin-right:6px}.rigor[open] summary:before{content:'−'}.rigor p{font-size:10.3px;color:#686158;max-width:900px}
+    .v2rev{opacity:0;transform:translateY(14px);transition:.55s}.v2rev.on{opacity:1;transform:none}.atlas-shortcut{display:inline-flex;margin-top:11px;text-decoration:none;font-size:8.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#705f49}.atlas-shortcut:after{content:' ↗'}
+    @media(max-width:1080px){#judge-rail{left:0}.exec-stage{grid-template-columns:1fr}.exec-map{position:relative;top:auto;min-height:auto}.subchain{grid-template-columns:1fr 1fr}.substep:not(:last-child):after{display:none}}
+    @media(max-width:820px){.decision-compass{grid-template-columns:1fr 1fr;grid-template-rows:auto}.decision-center,.decision-lines{display:none}.dn-v,.dn-viii,.dn-iii,.dn-vii{grid-column:auto;grid-row:auto}.subchain{grid-template-columns:1fr}#judge-rail .inner{max-width:calc(100vw - 16px);overflow:auto;justify-content:flex-start}}
+    @media(prefers-reduced-motion:reduce){.v2rev{opacity:1;transform:none;transition:none}.decision-node,.exec-step{transition:none}}
+    @media print{#judge-rail{display:none}.v2rev{opacity:1;transform:none}.rigor p{display:block!important}}
+  `;
+  document.head.appendChild(style);
+
+  const heroInner = q('.hero-inner', hero);
+  const kicker = q('.kicker', hero);
+  if (kicker) kicker.textContent = 'MEMORIAL VISUAL INTERATIVO · AÇÃO RESCISÓRIA';
+  const sub = q('.hero-sub', hero);
+  if (sub) sub.textContent = 'Uma leitura visual da réplica organizada pelo que o Tribunal precisa decidir: quatro fundamentos autônomos do art. 966 do CPC, cada um ligado a uma premissa, um fato documental e um efeito rescindente delimitado.';
+  if (heroInner && !q('#decision-compass')) {
+    const box = document.createElement('div');
+    box.id = 'decision-compass'; box.className = 'decision-compass v2rev';
+    box.innerHTML = `<svg class="decision-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="50" y1="50" x2="22" y2="16"/><line x1="50" y1="50" x2="78" y2="16"/><line x1="50" y1="50" x2="22" y2="84"/><line x1="50" y1="50" x2="78" y2="84"/></svg>
+      <a class="decision-node dn-v" href="#sentenca"><i>V</i><div><b>Violação manifesta</b><small>Regra de julgamento e ônus do fato constitutivo.</small></div></a>
+      <a class="decision-node dn-viii" href="#nfe9883"><i>VIII</i><div><b>Erro de fato</b><small>NF-e 9.883 e informação oficial da SEFAZ.</small></div></a>
+      <div class="decision-center"><div><b>Sentença rescindenda</b><small>trânsito · 04.06.2024</small></div></div>
+      <a class="decision-node dn-iii" href="#pagamentos"><i>III</i><div><b>Dolo da parte vencedora</b><small>Cadeia financeira, ciência, conduta e nexo.</small></div></a>
+      <a class="decision-node dn-vii" href="#bradesco"><i>VII</i><div><b>Prova nova</b><small>Produção bancária posterior e decisividade.</small></div></a>`;
+    const actions = q('.hero-actions', heroInner);
+    if (actions) actions.insertAdjacentElement('afterend', box); else heroInner.appendChild(box);
   }
 
-  // HERO: transforma a entrada do site em convite explícito à leitura do Relator.
-  const heroSub = q('.hero-sub');
-  if (heroSub) {
-    heroSub.textContent = 'Memorial visual de apoio à réplica. A leitura começa pelo núcleo decisório: quatro fundamentos autônomos do art. 966 do CPC, cada um ligado ao fato, documento e efeito jurídico correspondente.';
-  }
-  const heroActions = q('.hero-actions');
-  if (heroActions) {
-    heroActions.innerHTML = `
-      <a class="pill primary" href="#atlas-relator">Começar · Relator 5 min</a>
-      <a class="pill ghost" href="#atlas">Mapa dos 4 incisos</a>
-      <a class="pill ghost" href="#atlas-decisao">Árvore decisória</a>
-      <a class="pill ghost" href="#pedidos">Ir aos pedidos</a>`;
+  if (!q('#judge-rail')) {
+    const rail = document.createElement('div'); rail.id = 'judge-rail';
+    rail.innerHTML = `<div class="inner"><a href="#atlas-relator" data-p="atlas-relator">5 min</a><a href="#sentenca" data-p="sentenca">V</a><a href="#nfe9883" data-p="nfe9883">VIII</a><a href="#pagamentos" data-p="pagamentos">III</a><a href="#bradesco" data-p="bradesco">VII</a><a href="#atlas-suframa" data-p="atlas-suframa">Subsunção</a><a href="#contestacao" data-p="contestacao">Contestação × réplica</a><a href="#pedidos" data-p="pedidos">Pedidos</a></div>`;
+    document.body.appendChild(rail);
   }
 
-  // RELATOR 5 MIN: primeira seção substantiva. Substitui perguntas por uma rota de decisão em cinco passos.
   const relator = q('#atlas-relator .section-inner');
-  if (relator) {
-    relator.innerHTML = `
-      <div class="section-head">
-        <div>
-          <div class="section-index">COMECE AQUI · RELATOR · 5 MIN</div>
-          <h3>A réplica em cinco passos decisórios</h3>
-        </div>
-        <p class="section-intro">A contestação procura reduzir a ação a revaloração de prova. A réplica responde separando quatro hipóteses do art. 966 e demonstrando, em cada uma, qual fato processual ou documental deve ser confrontado com a sentença.</p>
-      </div>
-      <div class="relator-path">
-        <a class="atlas-q" href="#sentenca"><i>1</i><div><b>Art. 966, V</b><p>Comece pela regra de julgamento usada depois dos embargos: quem suportou o ônus do fato constitutivo?</p></div></a>
-        <a class="atlas-q" href="#nfe9883"><i>2</i><div><b>Art. 966, VIII</b><p>Veja a NF-e 9.883: cobrança, resposta oficial da SEFAZ e premissa adotada pela sentença.</p></div></a>
-        <a class="atlas-q" href="#pagamentos"><i>3</i><div><b>Art. 966, III</b><p>Examine 11.572A, pagamentos correlatos, cadeia de beneficiários e ciência da credora.</p></div></a>
-        <a class="atlas-q" href="#bradesco"><i>4</i><div><b>Art. 966, VII</b><p>Confira a prova bancária obtida judicialmente em 2026 e sua função subsidiária.</p></div></a>
-        <a class="atlas-q" href="#pedidos"><i>5</i><div><b>Efeito pedido</b><p>O resultado é modular: cada fundamento alcança apenas a parcela da sentença que efetivamente toca.</p></div></a>
-      </div>
-      <div class="atlas-foot" style="margin-top:16px"><strong>Ordem sugerida:</strong> V → VIII → III → VII → pedidos. O percurso temporal e o caderno documental ficam depois, para conferência.</div>
-      <div class="relator-sequence">
-        <a href="#atlas">Mapa dos 4 incisos</a>
-        <a href="#atlas-decisao">Árvore decisória</a>
-        <a href="#atlas-suframa">Matriz de comprovação</a>
-        <a href="#tempo">Cronologia</a>
-        <a href="#documentos">Índice documental</a>
-      </div>`;
-  }
+  if (relator) relator.innerHTML = `<div class="section-head v2rev"><div><div class="section-index">LEITURA EXECUTIVA DO RELATOR · 5 MIN</div><h3>O processo pode ser compreendido por quatro verificações objetivas</h3></div><p class="section-intro">A contestação procura reduzir a rescisória a revaloração global da prova. A réplica separa os quatro fundamentos e conduz diretamente ao fato processual ou documental de cada um.</p></div>
+    <div class="exec-stage"><aside class="exec-map v2rev"><div class="section-index" style="color:#c9b38d">NÚCLEO DECISÓRIO</div><h4>Sentença no centro. Quatro caminhos autônomos.</h4><p>A leitura parte da subsunção: premissa decisória, fato documentado, norma invocada e efeito pedido.</p><div class="orbit"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="50" y1="50" x2="18" y2="20"/><line x1="50" y1="50" x2="82" y2="20"/><line x1="50" y1="50" x2="18" y2="80"/><line x1="50" y1="50" x2="82" y2="80"/></svg><div class="c"><b>SENTENÇA</b></div><a class="a" href="#sentenca">V</a><a class="b" href="#nfe9883">VIII</a><a class="d" href="#pagamentos">III</a><a class="e" href="#bradesco">VII</a></div><a class="atlas-shortcut" href="#atlas">Abrir mapa completo no Atlas</a></aside>
+    <div class="exec-steps"><a class="exec-step v2rev" href="#sentenca"><span class="n nv">1</span><div><h4>V · Regra de julgamento</h4><p>Confrontar o resultado da instrução sobre entrega com a regra de ônus aplicada depois dos embargos.</p><small>Fato processual → norma → efeito</small></div></a><a class="exec-step v2rev" href="#nfe9883"><span class="n nviii">2</span><div><h4>VIII · NF-e 9.883</h4><p>Título cobrado, resposta oficial da SEFAZ e premissa geral utilizada pela sentença.</p><small>Documento oficial → premissa → erro de fato</small></div></a><a class="exec-step v2rev" href="#pagamentos"><span class="n niii">3</span><div><h4>III · Cadeia financeira</h4><p>11.572A, pagamentos, beneficiários e pluralidade documentada de canais de liquidação.</p><small>Ciência → conduta → nexo processual</small></div></a><a class="exec-step v2rev" href="#bradesco"><span class="n nvii">4</span><div><h4>VII · Prova bancária superveniente</h4><p>Produção judicial posterior examinada pelos requisitos próprios da prova nova.</p><small>Preexistência → inacessibilidade → decisividade</small></div></a><a class="exec-step v2rev" href="#pedidos"><span class="n nend">5</span><div><h4>Efeito pedido</h4><p>O pedido é modular: cada fundamento alcança somente a parcela da sentença que efetivamente toca.</p><small>Subsunção → alcance → pedido</small></div></a></div></div>`;
 
-  // MAPA DOS QUATRO INCISOS: mantém a interação original, mas simplifica a linguagem.
-  const atlasHero = q('#atlas .atlas-hero');
-  if (atlasHero) {
-    atlasHero.innerHTML = `
-      <div class="section-index" style="color:#c9b38d">MAPA DOS QUATRO FUNDAMENTOS</div>
-      <h4>Quatro incisos. Quatro verificações diferentes.</h4>
-      <p>Documento → fato objetivo → premissa da sentença → inciso do art. 966 → efeito pedido. Clique em cada fundamento para ver a cadeia correspondente.</p>`;
-  }
-  const atlasHead = q('#atlas .section-head');
-  if (atlasHead) {
-    atlasHead.innerHTML = `
-      <div><div class="section-index">MAPA-MÃE</div><h3>A sentença no centro; os quatro fundamentos nas bordas</h3></div>
-      <p class="section-intro">O mapa organiza a réplica pelo que o Tribunal precisa decidir, não pela ordem em que os documentos foram juntados.</p>`;
-  }
-  const atlasTabs = q('#atlas .atlas-tabs');
-  if (atlasTabs) {
-    atlasTabs.innerHTML = `
-      <a href="#atlas-relator">Relator · 5 min</a>
-      <a href="#atlas">Mapa dos 4 incisos</a>
-      <a href="#atlas-decisao">Árvore decisória</a>
-      <a href="#sentenca">V · regra de julgamento</a>
-      <a href="#nfe9883">VIII · NF-e 9.883</a>
-      <a href="#pagamentos">III · cadeia financeira</a>
-      <a href="#bradesco">VII · prova bancária</a>
-      <a href="#atlas-suframa">Matriz de comprovação</a>
-      <a href="#pedidos">Pedidos</a>`;
-  }
+  const addMap = (c) => {
+    const inner = q(c.sel + ' .section-inner'); if (!inner || q('#'+c.id)) return;
+    const m = document.createElement('div'); m.id = c.id; m.className = `submap ${c.cls} v2rev`;
+    m.innerHTML = `<div class="subtop"><div class="ey">QUADRO DE SUBSUNÇÃO · ART. 966, ${c.inc}</div><div class="subtools">${c.chips.map(x=>`<a class="echip" href="${x[1]}">${x[0]}</a>`).join('')}<a class="echip" href="#atlas">Ver no Atlas ↗</a></div></div><div class="subchain"><div class="substep"><span>1 · Premissa decisória</span><b>${c.p1}</b><p>${c.p2}</p></div><div class="substep"><span>2 · Fato documentado</span><b>${c.f1}</b><p>${c.f2}</p></div><div class="substep"><span>3 · Confronto objetivo</span><b>${c.c1}</b><p>${c.c2}</p></div><div class="substep norm"><span>4 · Subsunção pretendida</span><b>Art. 966, ${c.inc}</b><p>${c.norm}</p></div><div class="substep"><span>5 · Efeito rescindente</span><b>${c.e1}</b><p>${c.e2}</p></div></div><details class="rigor"><summary>Nota de rigor probatório</summary><p>${c.rigor}</p></details>`;
+    const h = q('.section-head', inner); h ? h.insertAdjacentElement('afterend', m) : inner.prepend(m);
+  };
 
-  // ÁRVORE DECISÓRIA: muda apenas o enquadramento editorial.
-  const decisionHead = q('#atlas-decisao .section-head');
-  if (decisionHead) {
-    decisionHead.innerHTML = `
-      <div><div class="section-index">ROTA DE DECISÃO</div><h3>Primeiro: é revaloração ou hipótese rescindente delimitada?</h3></div>
-      <p class="section-intro">A árvore converte a objeção central da contestação em uma sequência objetiva de verificações.</p>`;
-  }
+  addMap({sel:'#sentenca',id:'sub-v',cls:'mv',inc:'V',p1:'Procedência após os embargos',p2:'A sentença resolveu definitivamente a cobrança e explicitou a regra de julgamento aplicada ao fato constitutivo.',f1:'A instrução buscou prova direta de entrega',f2:'A SIMBAL requereu diligência à transportadora para informar a entrega e apresentar comprovantes; o juízo deferiu.',c1:'Resultado instrutório × ônus do fato constitutivo',c2:'A ausência dos recibos diretamente buscados é confrontada com a forma pela qual o decisum solucionou o núcleo da causalidade mercantil.',norm:'Violação manifesta da regra jurídica de julgamento e distribuição do ônus, nos limites articulados pela réplica.',e1:'Desconstituição no alcance do vício',e2:'O pedido incide sobre a conclusão dependente da regra questionada, sem reabrir indistintamente toda a prova.',rigor:'PIN, EFD, CT-e e elementos administrativos permanecem na conferência, mas o núcleo do inciso V é a regra jurídica de julgamento após a instrução.',chips:[['Transportes Carinhoso','#carinhoso'],['Instrução','#instrucao'],['Sentença','#sentenca']]});
+  addMap({sel:'#nfe9883',id:'sub-viii',cls:'mviii',inc:'VIII',p1:'A sentença atribui alcance geral ao ofício fiscal',p2:'O decisum utiliza a informação fiscal como elemento de corroboração da regularidade das operações cobradas.',f1:'A NF-e 9.883 integra a cobrança e não foi localizada na EFD',f2:'A resposta oficial da SEFAZ individualiza a NF-e 9.883 como não encontrada, embora o título correlato integre o conjunto cobrado.',c1:'Premissa geral × exceção oficial individualizada',c2:'A afirmação decisória geral é confrontada com um dado oficial específico que não se ajusta à mesma premissa.',norm:'Erro de fato delimitado, nos termos do art. 966, VIII, conforme a subsunção construída na réplica.',e1:'Rescisão parcial',e2:'O alcance pedido é restrito ao segmento do julgado afetado pelo microfato, preservando o restante da decisão.',rigor:'O fundamento é individualizado sobre a NF-e 9.883 e a premissa decisória correspondente; não pressupõe invalidade de todas as notas.',chips:[['NF-e 9.883','#nfe9883'],['SEFAZ','#documentos'],['Documento-fonte','#documentos']]});
+  addMap({sel:'#pagamentos',id:'sub-iii',cls:'miii',inc:'III',p1:'Cobrança judicial de crédito tido por íntegro',p2:'A obtenção da sentença pressupõe compatibilidade entre a cadeia cobrada e pagamentos ou cessões relevantes conhecidos pela credora.',f1:'Pagamentos e beneficiários formam uma cadeia financeira',f2:'A réplica individualiza 11.572A, pagamentos correlatos, beneficiários e documentação contemporânea de liquidação por canais distintos, inclusive depósito direto.',c1:'Cadeia financeira × cobrança mantida em juízo',c2:'Os lançamentos são lidos em conjunto para apurar ciência, conduta processual e eventual cobrança incompatível com pagamentos ou mutações da cadeia do crédito.',norm:'Dolo da parte vencedora quando a cadeia probatória demonstrar conduta consciente e nexo causal com a obtenção do julgado.',e1:'Desconstituição causalmente delimitada',e2:'O inciso III alcança apenas títulos e valores para os quais a réplica demonstrar a cadeia entre conhecimento, conduta e resultado processual.',rigor:'O e-mail contemporâneo documenta a prática de pagamento direto; a quitação de cada título depende da individualização bancária correspondente.',chips:[['Família 11.572','#pagamentos'],['Extratos','#bradesco'],['Índice documental','#documentos']]});
+  addMap({sel:'#bradesco',id:'sub-vii',cls:'mvii',inc:'VII',p1:'A cadeia bancária relevante não constava integralmente dos autos originários',p2:'A tese subsidiária parte da produção judicial posterior de dados capazes de individualizar beneficiários e lançamentos.',f1:'Produção judicial em 2026',f2:'A documentação bancária foi produzida no processo próprio contra o Bradesco e permite confrontar pagamentos específicos com a cadeia do crédito.',c1:'Documento supervenientemente obtido × julgamento transitado',c2:'Para cada elemento, o exame recai sobre preexistência, impossibilidade de uso anterior e aptidão para alterar o resultado.',norm:'Prova nova em sentido estrito, conforme os requisitos do art. 966, VII.',e1:'Fundamento subsidiário',e2:'Somente os elementos que satisfaçam cumulativamente os requisitos legais integram este inciso e podem sustentar o juízo rescisório.',rigor:'A documentação antiga revisitada funciona como contexto ou corroboração; o núcleo do VII permanece a prova bancária judicialmente produzida.',chips:[['Bradesco','#bradesco'],['Pagamentos','#pagamentos'],['Índice documental','#documentos']]});
 
-  // INCISO V: reforça a leitura positiva do fato processual comprovado.
-  const sentencaIntro = q('#sentenca .section-intro');
-  if (sentencaIntro) sentencaIntro.textContent = 'O ponto de partida é objetivo: depois dos embargos, a sentença explicitou a regra de julgamento que sustentou a procedência.';
-  const carinhosoHead = q('#carinhoso .section-head');
-  if (carinhosoHead) {
-    carinhosoHead.innerHTML = `
-      <div><div class="section-index">ART. 966, V · RESULTADO DA INSTRUÇÃO</div><h3>A prova direta de entrega foi buscada no próprio processo</h3></div>
-      <p class="section-intro">A SIMBAL pediu os comprovantes à transportadora; o juízo deferiu; a instrução terminou sem a apresentação dos recibos solicitados.</p>`;
-  }
-  const carinhosoCallout = q('#carinhoso .callout');
-  if (carinhosoCallout) {
-    carinhosoCallout.innerHTML = `<div class="label">FATO PROCESSUAL COMPROVADO</div><h4>A diligência para obter prova direta de entrega integrou formalmente a instrução e não produziu os recibos requeridos.</h4><p>Esse dado se conecta ao inciso V porque a sentença, ainda assim, resolveu definitivamente os embargos a partir da regra de julgamento reproduzida no próprio decisum.</p>`;
-  }
-  const pinHead = q('#pin .section-head');
-  if (pinHead) {
-    pinHead.innerHTML = `
-      <div><div class="section-index">ART. 966, V · SUFRAMA / LOGÍSTICA FISCAL</div><h3>PIN e vistoria na cadeia de comprovação</h3></div>
-      <p class="section-intro">O PIN é apresentado pelo que efetivamente representa no percurso administrativo: ingresso, vistoria e situação fiscal/logística, a serem lidos em conjunto com a prova civil de entrega discutida na monitória.</p>`;
-  }
+  const matrix = q('#atlas-suframa .section-head');
+  if (matrix) matrix.innerHTML = `<div><div class="section-index">QUADRO DE SUBSUNÇÃO AO ART. 966</div><h3>Quatro fundamentos, quatro cadeias de comprovação</h3></div><p class="section-intro">Fato documental, premissa decisória, inciso aplicável e efeito pedido em uma única leitura.</p>`;
+  const mx = q('.side nav a[href="#atlas-suframa"]'); if (mx) mx.innerHTML = '<span class="dot"></span>Quadro de subsunção';
+  const rl = q('.side nav a[href="#atlas-relator"]'); if (rl) rl.innerHTML = '<span class="dot"></span>Leitura executiva · 5 min';
 
-  // INCISO III: integra o achado do pagamento direto como parte da cadeia financeira, sem qualquer referência a NF específica ou imagem.
-  const pagamentos = q('#pagamentos .section-inner');
-  q('#reforco-pagamentos-diretos')?.remove();
-  if (pagamentos) {
-    const block = document.createElement('div');
-    block.id = 'reforco-pagamentos-diretos';
-    block.className = 'callout';
-    block.style.marginTop = '18px';
-    block.innerHTML = `
-      <div class="label">DINÂMICA FINANCEIRA DOCUMENTADA</div>
-      <h4>A relação comercial admitia liquidação por canais distintos.</h4>
-      <p>Correspondência corporativa contemporânea da própria SIMBAL registra títulos mantidos “em carteira” e instrução de pagamento mediante depósito direto em conta indicada pela fornecedora. O dado documenta que a liquidação não se limitava ao fluxo ordinário boleto/DDA.</p>
-      <p style="margin-top:10px"><strong>Função na réplica:</strong> ler os extratos bancários como cadeia financeira — SIMBAL, fundos e demais agentes — e individualizar a vinculação de cada pagamento antes de concluir sobre inadimplemento.</p>`;
-    pagamentos.appendChild(block);
-  }
-
-  // INCISO VII: conecta a prova bancária posterior à pluralidade documentada de canais.
-  const bradesco = q('#bradesco .section-inner');
-  q('#reforco-bradesco-canais')?.remove();
-  if (bradesco) {
-    const block = document.createElement('div');
-    block.id = 'reforco-bradesco-canais';
-    block.className = 'card';
-    block.style.marginTop = '18px';
-    block.innerHTML = `
-      <div class="meta">CADEIA DE PAGAMENTOS</div>
-      <h4>Extratos + prática comercial contemporânea</h4>
-      <p>A produção bancária de 2026 deve ser lida em conjunto com a dinâmica comercial documentada: havia pagamentos dirigidos à própria SIMBAL e fluxos envolvendo outros beneficiários. A finalidade do inciso VII é permitir a reconstrução individualizada desses lançamentos quando preenchidos os requisitos próprios da prova nova.</p>`;
-    bradesco.appendChild(block);
-  }
-
-  // CONTESTAÇÃO: o antecedente de 2015 entra exatamente onde responde à tese de construção retrospectiva.
-  const contestacao = q('#contestacao .section-inner');
-  q('#reforco-contestacao-2015')?.remove();
-  if (contestacao) {
-    const block = document.createElement('div');
-    block.id = 'reforco-contestacao-2015';
-    block.className = 'grid two';
-    block.style.marginTop = '18px';
-    block.innerHTML = `
-      <div class="card"><div class="meta">RESPOSTA À TESE DE CONSTRUÇÃO RETROSPECTIVA</div><h4>A controvérsia sobre duplicatas já era contemporânea à relação comercial</h4><p>Documentação de 2015 registra discussão formal entre PICCOLI e SIMBAL envolvendo duplicatas apontadas como inexistentes ou em duplicidade, protestos e cartas de anuência. O dado demonstra anterioridade histórica da controvérsia que a rescisória depois organiza juridicamente.</p></div>
-      <div class="card"><div class="meta">AÇÃO 0614260-23.2015.8.04.0001</div><h4>PICCOLI já havia judicializado conflito cambial contra a SIMBAL</h4><p>O processo anterior foi ajuizado pela PICCOLI contra a SIMBAL e integrou a mesma relação comercial. Na réplica, ele funciona como antecedente documental da controvérsia, enquanto os títulos da monitória atual permanecem examinados individualmente.</p></div>`;
-    contestacao.appendChild(block);
-  }
-
-  // RÉPLICA: síntese do método sem chamar os achados de "complementos".
-  const replica = q('#replica .section-inner');
-  q('#reforco-replica-metodo')?.remove();
-  if (replica) {
-    const block = document.createElement('div');
-    block.id = 'reforco-replica-metodo';
-    block.className = 'card';
-    block.style.marginTop = '18px';
-    block.innerHTML = `<div class="meta">MÉTODO DA RÉPLICA</div><h4>Cada documento é lido dentro do fundamento rescindente ao qual pertence.</h4><p>O memorial segue a mesma lógica da peça: fato processual ou documental → fonte primária → inciso do art. 966 → efeito jurídico. O objetivo é reduzir a carga de leitura sem alterar os fundamentos já deduzidos.</p>`;
-    replica.appendChild(block);
-  }
-
-  // MATRIZ DE COMPROVAÇÃO: substitui o antigo bloco "o que prova / não prova" por quatro cadeias positivas de comprovação.
-  const matriz = q('#atlas-suframa .section-inner');
-  if (matriz) {
-    matriz.innerHTML = `
-      <div class="section-head">
-        <div><div class="section-index">MATRIZ DE COMPROVAÇÃO · ART. 966</div><h3>Quatro cadeias objetivas, uma para cada fundamento</h3></div>
-        <p class="section-intro">Aqui o relator vê apenas a sequência afirmativa: fato documentado, fonte nos autos e questão rescindente correspondente.</p>
-      </div>
-      <div class="proof-grid">
-        <article class="proof-card"><span class="badge">ART. 966, V</span><h4>Regra de julgamento após os embargos</h4><p><strong>Fato documentado:</strong> a própria SIMBAL requereu prova externa de entrega; a diligência foi deferida; a instrução encerrou sem os recibos solicitados; e a sentença imputou à embargante o encargo de infirmar a obrigação.</p><div class="proof-chain"><strong>Cadeia:</strong> instrução → sentença → arts. 373, I e 702, §1º → violação manifesta alegada.</div></article>
-        <article class="proof-card"><span class="badge red">ART. 966, VIII</span><h4>NF-e 9.883 e a premissa fiscal da sentença</h4><p><strong>Fato documentado:</strong> o título 000009883A integrou a cobrança; a SEFAZ informou que a NF-e 9.883 não foi encontrada em nenhuma EFD; e o ofício foi utilizado na fundamentação como corroboração geral da escrituração.</p><div class="proof-chain"><strong>Cadeia:</strong> título cobrado → resposta oficial da SEFAZ → premissa decisória → erro de fato alegado → possível rescisão parcial.</div></article>
-        <article class="proof-card"><span class="badge gold">ART. 966, III</span><h4>11.572A e a cadeia financeira</h4><p><strong>Fato documentado:</strong> 11.572A integra a cobrança; a família correlata possui pagamentos apontados; os extratos registram fluxos para SIMBAL e outros beneficiários; e a correspondência contemporânea documenta liquidação também por depósito direto.</p><div class="proof-chain"><strong>Cadeia:</strong> crédito cobrado → pagamentos/beneficiários → ciência → conduta processual → nexo com a condenação.</div></article>
-        <article class="proof-card"><span class="badge blue">ART. 966, VII</span><h4>Produção bancária posterior à coisa julgada</h4><p><strong>Fato documentado:</strong> a produção de prova contra o Bradesco foi ajuizada em 2026 e gerou extratos bancários posteriores ao trânsito em julgado, destinados à individualização de pagamentos e beneficiários.</p><div class="proof-chain"><strong>Cadeia:</strong> documento bancário → preexistência do fato → acesso posterior → aptidão decisiva → prova nova em caráter subsidiário.</div></article>
-      </div>`;
-  }
-
-  // ÍNDICE DOCUMENTAL: referências objetivas, sem linguagem de "complementos".
-  const docBody = q('#docTable tbody') || q('#docBody');
-  if (docBody) {
-    qa('tr[data-reforco-doc]', docBody).forEach(tr => tr.remove());
-    const rows = [
-      ['pagamento-direto','Correspondência corporativa SIMBAL · set/2015','Registra títulos em carteira e orientação de pagamento por depósito direto.','Acervo contemporâneo · set/2015','Cadeia financeira / art. 966, III','apoio'],
-      ['cautelar-2015','Ação 0614260-23.2015.8.04.0001','PICCOLI contra SIMBAL em controvérsia cambial contemporânea à relação comercial.','TJAM · 2015','Resposta à tese de construção retrospectiva','apoio'],
-      ['thread-2109','Correspondência de 21.09.2015','Registra que a questão dos títulos e protestos permanecia ativa no período.','Acervo contemporâneo · 21.09.2015','Contexto cronológico da controvérsia','contexto']
-    ];
-    rows.forEach(r => {
-      const tr = document.createElement('tr');
-      tr.dataset.reforcoDoc = r[0];
-      tr.innerHTML = `<td><strong>${r[1]}</strong></td><td>${r[2]}</td><td><span class="doc-ref">${r[3]}</span></td><td>${r[4]}</td><td><span class="status warn">${r[5]}</span></td>`;
-      docBody.appendChild(tr);
-    });
-  }
-
-  // ORDEM EDITORIAL: o Relator encontra primeiro a síntese e os quatro fundamentos; o histórico vem depois para conferência.
-  const order = [
-    'atlas-relator',
-    'atlas',
-    'atlas-decisao',
-    'sentenca',
-    'atlas-bifase',
-    'nfe9883',
-    'pagamentos',
-    'bradesco',
-    'atlas-suframa',
-    'contestacao',
-    'replica',
-    'pedidos',
-    'tempo',
-    'origem',
-    'instrucao',
-    'carinhoso',
-    'pin',
-    'atlas-11572',
-    'documentos',
-    'atlas-swimlane',
-    'rescisoria',
-    'visao',
-    'incisos'
-  ];
+  const order = ['#atlas-relator','#atlas','#atlas-decisao','#sentenca','#nfe9883','#pagamentos','#bradesco','#atlas-suframa','#contestacao','#replica','#pedidos'];
   let cursor = hero;
-  order.forEach(id => {
-    const el = q('#' + id);
-    if (el) {
-      cursor.insertAdjacentElement('afterend', el);
-      cursor = el;
-    }
-  });
+  order.forEach(sel => { const sec = q(sel); if (sec) { cursor.insertAdjacentElement('afterend', sec); cursor = sec; } });
+  qa('main > section.section').forEach(sec => { if (!order.includes('#'+sec.id)) sec.dataset.relatorSecondary = 'true'; });
 
-  // As seções posteriores aos pedidos passam a ser claramente material de conferência/detalhe.
-  ['tempo','origem','instrucao','carinhoso','pin','atlas-11572','documentos','atlas-swimlane','rescisoria','visao','incisos'].forEach(id => {
-    const el = q('#' + id);
-    if (el) el.dataset.relatorSecondary = 'true';
-  });
+  const rev = qa('.v2rev');
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), {threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    rev.forEach(x => io.observe(x));
+  } else rev.forEach(x => x.classList.add('on'));
 
-  // SIDEBAR: reconstrói a navegação na mesma sequência cognitiva do Relator.
-  const nav = q('.side nav');
-  if (nav) {
-    nav.innerHTML = `
-      <div class="nav-group">COMECE AQUI</div>
-      <a href="#atlas-relator"><span class="dot"></span>Relator · 5 min</a>
-      <a href="#atlas"><span class="dot"></span>Mapa dos 4 incisos</a>
-      <a href="#atlas-decisao"><span class="dot"></span>Árvore decisória</a>
-      <div class="nav-group">QUATRO FUNDAMENTOS</div>
-      <a href="#sentenca"><span class="dot"></span>V · Regra de julgamento</a>
-      <a href="#nfe9883"><span class="dot"></span>VIII · NF-e 9.883</a>
-      <a href="#pagamentos"><span class="dot"></span>III · Cadeia financeira</a>
-      <a href="#bradesco"><span class="dot"></span>VII · Prova bancária</a>
-      <a href="#atlas-suframa"><span class="dot"></span>Matriz de comprovação</a>
-      <div class="nav-group">RESPOSTA E DESFECHO</div>
-      <a href="#contestacao"><span class="dot"></span>Contestação × réplica</a>
-      <a href="#replica"><span class="dot"></span>Arquitetura da réplica</a>
-      <a href="#pedidos"><span class="dot"></span>Pedidos</a>
-      <div class="nav-group">CONFERÊNCIA</div>
-      <a href="#tempo"><span class="dot"></span>Percurso temporal</a>
-      <a href="#carinhoso"><span class="dot"></span>Prova de entrega</a>
-      <a href="#pin"><span class="dot"></span>PIN / SUFRAMA</a>
-      <a href="#atlas-11572"><span class="dot"></span>Família 11.572</a>
-      <a href="#documentos"><span class="dot"></span>Índice documental</a>
-      <a href="#atlas-swimlane"><span class="dot"></span>Swimlane</a>`;
-
-    const links = qa('a[href^="#"]', nav);
-    links.forEach(a => a.addEventListener('click', () => q('#sidebar')?.classList.remove('open')));
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
-      });
-    }, {rootMargin:'-32% 0px -58% 0px', threshold:.01});
-    links.forEach(a => {
-      const target = q(a.getAttribute('href'));
-      if (target) obs.observe(target);
-    });
-  }
-
-  // Ferramenta lateral: linguagem coerente com a nova leitura.
-  const firstTool = q('.side-tools button');
-  if (firstTool) firstTool.textContent = 'Alternar leitura 5 min / completa';
-
-  // O antigo bloco autônomo dos quatro incisos fica como detalhe de conferência; a síntese principal passa a ser o mapa + matriz.
-  const oldIncisosHead = q('#incisos .section-head');
-  if (oldIncisosHead) {
-    oldIncisosHead.innerHTML = `<div><div class="section-index">QUADRO JURÍDICO DETALHADO</div><h3>Os quatro fundamentos, em leitura ampliada</h3></div><p class="section-intro">Quadro de conferência para quem desejar aprofundar a síntese apresentada no início do memorial.</p>`;
-  }
+  const phases = ['atlas-relator','sentenca','nfe9883','pagamentos','bradesco','atlas-suframa','contestacao','pedidos'].map(id=>q('#'+id)).filter(Boolean);
+  const update = () => { let active=phases[0]?.id; const y=scrollY+150; phases.forEach(s=>{if(s.offsetTop<=y) active=s.id}); qa('#judge-rail a').forEach(a=>a.classList.toggle('active',a.dataset.p===active)); };
+  update(); addEventListener('scroll', update, {passive:true});
 })();
