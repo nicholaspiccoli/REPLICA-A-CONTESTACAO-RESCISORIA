@@ -15,11 +15,12 @@
   const base='https://cdn.jsdelivr.net/gh/nicholaspiccoli/REPLICA-A-CONTESTACAO-RESCISORIA@f4b6a7ef8acf865f3a2149104a30beeb8608c4c9/index.html';
   const baseline='https://cdn.jsdelivr.net/gh/nicholaspiccoli/REPLICA-A-CONTESTACAO-RESCISORIA@990ea99c8097c70c53cda1cea76937244d57140e/complemento-replica-2026-09-11.js';
   const visual='https://cdn.jsdelivr.net/gh/nicholaspiccoli/REPLICA-A-CONTESTACAO-RESCISORIA@da2b29c24fa3bce52eff96d054434a3a28053ca5/complemento-replica-2026-09-11.js';
+  const gabinete='https://cdn.jsdelivr.net/gh/nicholaspiccoli/REPLICA-A-CONTESTACAO-RESCISORIA@4e99916ef5872788c0febc41212a54a92afd9766/gabinete-replica-2026-09-11.js';
   try{
     const r=await fetch(base,{cache:'no-store'});
     if(!r.ok)throw new Error('HTTP '+r.status);
     let html=await r.text();
-    html=html.replace('</body>',`<script src="${baseline}"><\/script><script src="${visual}"><\/script></body>`);
+    html=html.replace('</body>',`<script src="${baseline}"><\/script><script src="${visual}"><\/script><script src="${gabinete}"><\/script></body>`);
     document.open();document.write(html);document.close();
   }catch(e){
     document.body.innerHTML='<div class="boot"><div><b>Falha ao carregar o memorial.</b><span>Atualize a página ou consulte o repositório oficial.</span></div></div>';
